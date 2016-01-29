@@ -1,25 +1,23 @@
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
-from gatech.items import GatechlistSampleItem
-
+from gatech.items import GatechItem
+import lxml.html
 
 class MySpider(CrawlSpider):
     name = "gatech"
-    allowed_domains = ["sfbay.craigslist.org"]
-    start_urls = ["http://sfbay.craigslist.org/search/npo"]
+    allowed_domains = ["gatech.edu"]
+    start_urls = ["http://www.gatech.edu/"]
 
     rules = (
-        Rule(SgmlLinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_items", follow= True),
+        Rule(SgmlLinkExtractor(), callback="parse_items", follow= True),
     )
 
     def parse_items(self, response):
-        hxs = HtmlXPathSelector(response)
-        titles = hxs.xpath('//span[@class="pl"]')
-        items = []
-        for titles in titles:
-            item = GatechlistSampleItem()
-            item["title"] = titles.xpath("a/text()").extract()
-            item["link"] = titles.xpath("a/@href").extract()
-            items.append(item)
-        return(items)
+        root = lxml.html.fromstring(response.body)
+        lxml.etree.strip_elements(root, lxml.etree.Comment, "script", "head")
+
+        item = GatechItem()
+        item['url'] = response.url
+        item['text'] = lxml.html.tostring(root, method="text", encoding=unicode)
+        return item

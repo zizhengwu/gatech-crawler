@@ -5,6 +5,6 @@
 
 from scrapy.item import Item, Field
 
-class GatechlistSampleItem(Item):
-    title = Field()
-    link = Field()
+class GatechItem(Item):
+    url = Field()
+    text = Field()
