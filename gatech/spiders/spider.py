@@ -1,11 +1,11 @@
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
-from craigslist_sample.items import CraigslistSampleItem
+from gatech.items import GatechlistSampleItem
 
 
 class MySpider(CrawlSpider):
-    name = "craigs"
+    name = "gatech"
     allowed_domains = ["sfbay.craigslist.org"]
     start_urls = ["http://sfbay.craigslist.org/search/npo"]
 
@@ -18,7 +18,7 @@ class MySpider(CrawlSpider):
         titles = hxs.xpath('//span[@class="pl"]')
         items = []
         for titles in titles:
-            item = CraigslistSampleItem()
+            item = GatechlistSampleItem()
             item["title"] = titles.xpath("a/text()").extract()
             item["link"] = titles.xpath("a/@href").extract()
             items.append(item)
