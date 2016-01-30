@@ -14,3 +14,8 @@ ITEM_PIPELINES = {'gatech.pipelines.GatechSamplePipeline': 1000}
 LOG_LEVEL = 'INFO'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'gatech (+http://www.yourdomain.com)'
+
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "gatech"
+MONGODB_COLLECTION = "pages"
