@@ -1,2 +1,7 @@
-from scrapy import cmdline
-cmdline.execute("scrapy crawl craigs -o items.csv -t csv".split())
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
+
+process = CrawlerProcess(get_project_settings())
+
+process.crawl('gatech')
+process.start()
