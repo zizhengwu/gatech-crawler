@@ -2,7 +2,7 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import HtmlXPathSelector
 from gatech.items import GatechItem
-import lxml.html
+import html2text
 
 class MySpider(CrawlSpider):
     name = "gatech"
@@ -14,10 +14,11 @@ class MySpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        root = lxml.html.fromstring(response.body)
-        lxml.etree.strip_elements(root, lxml.etree.Comment, "script", "head")
-
+        html2text.BODY_WIDTH = 0
         item = GatechItem()
+        converter = html2text.HTML2Text()
+
         item['url'] = response.url
-        item['text'] = lxml.html.tostring(root, method="text", encoding=unicode)
+        item['text'] = converter.handle((response.body.decode(response.encoding)).encode('utf-8').decode('utf-8'))
+
         return item
