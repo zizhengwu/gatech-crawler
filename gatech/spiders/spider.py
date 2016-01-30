@@ -10,7 +10,7 @@ class MySpider(CrawlSpider):
     start_urls = ["http://www.gatech.edu/"]
 
     rules = (
-        Rule(SgmlLinkExtractor(), callback="parse_items", follow= True),
+        Rule(SgmlLinkExtractor(), callback="parse_items", follow= False),
     )
 
     def parse_items(self, response):
@@ -19,6 +19,6 @@ class MySpider(CrawlSpider):
         converter = html2text.HTML2Text()
 
         item['url'] = response.url
-        item['text'] = converter.handle((response.body.decode(response.encoding)).encode('utf-8').decode('utf-8'))
+        item['text'] = converter.handle((response.body.decode(response.encoding)).encode('utf-8').decode('utf-8')).replace('\n', '')
 
         return item
