@@ -10,7 +10,7 @@ BOT_NAME = 'gatech'
 
 SPIDER_MODULES = ['gatech.spiders']
 NEWSPIDER_MODULE = 'gatech.spiders'
-ITEM_PIPLINES = ['gatech.pipelines.GatechSamplePipeline']
-
+ITEM_PIPELINES = {'gatech.pipelines.GatechSamplePipeline': 1000}
+LOG_LEVEL = 'INFO'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'gatech (+http://www.yourdomain.com)'
