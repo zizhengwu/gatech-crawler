@@ -10,7 +10,7 @@ class MySpider(CrawlSpider):
     start_urls = ["http://www.gatech.edu/"]
 
     rules = (
-        Rule(SgmlLinkExtractor(), callback="parse_items", follow= False),
+        Rule(SgmlLinkExtractor(), callback="parse_items", follow= True),
     )
 
     def parse_items(self, response):
