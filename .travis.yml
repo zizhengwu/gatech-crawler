@@ -2,6 +2,9 @@ sudo: false
 
 language: python
 
+services:
+  - mongodb
+
 python:
   - "2.7.11" 
 
@@ -11,4 +14,5 @@ install:
 
 # command to run tests
 script:
-  - python main.py
+  - python main.py --travis True
+  - cat log.txt
